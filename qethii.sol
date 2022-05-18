@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.14;
+pragma solidity ^0.8.7;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
@@ -85,22 +85,10 @@ contract QetHiiTest1 is ERC721, ERC721Enumerable, Pausable, Ownable {
         return _fgColors[tokenId];
     }
 
-    function ownerMint(string memory uri, string memory bgColor, string memory fgColor)
-    public onlyOwner
-    returns (uint256) {
-        require(totalSupply() < SUPPLYLIMIT, "Exceeds token supply.");
-        _tokenIds.increment(); // Begin at Id #1 instead of #0
-        uint256 newItemId = _tokenIds.current();
-        _mint(msg.sender, newItemId);
-        _setTokenURI(newItemId, uri);
-        _setColors(newItemId, bgColor, fgColor);
-        return newItemId;
-    }
-
     uint256 public constant SUPPLYLIMIT = 10000;
     //mapping (uint256 => uint256) private _prices;
 
-    
+    /*
     // Production
     function _setPrice(uint256 tokenId) 
     internal virtual 
@@ -125,9 +113,9 @@ contract QetHiiTest1 is ERC721, ERC721Enumerable, Pausable, Ownable {
             price = basePrice * 100;
         }
         return price;
-    }
+    }*/
 
-    /*
+    
     // Dev test 
     function _setPrice(uint256 tokenId) 
     internal virtual 
@@ -135,26 +123,37 @@ contract QetHiiTest1 is ERC721, ERC721Enumerable, Pausable, Ownable {
         // 0.5 ether = 50000000000000000
         uint256 basePrice = 0.05 ether;
         uint256 price;
-        if (tokenId == 1) {
+        if (tokenId >=1 && tokenId <= 2) {
             price == 0;
         }
-        else if (tokenId == 2) {
+        else if (tokenId == 3) {
             price = basePrice;
         }
         else {
             price = basePrice * 10;
         }
         return price;
-    }*/
+    }
 
-    function userMint(string memory uri, string memory bgColor, string memory fgColor)
+    function mint(string memory uri, string memory bgColor, string memory fgColor)
     public payable
     returns (uint256) {
-        require(balanceOf(msg.sender) == 0, "Already have token(s).");
         require(totalSupply() < SUPPLYLIMIT, "Exceeds token supply.");
+
         _tokenIds.increment(); // Begin at Id #1 instead of #0
         uint256 newItemId = _tokenIds.current();
-        require(msg.value >= _setPrice(newItemId), "Not enough value sent; check price!");
+
+        // if owner, set price to 0
+        if (msg.sender == owner()) {
+            msg.value == 0;
+        }
+        // if minting price == 0, user can mint just 1 token
+        else if (_setPrice(newItemId) == 0) {
+            require(balanceOf(msg.sender) == 0, "Already have token(s).");
+        }
+        else {
+            require(msg.value >= _setPrice(newItemId), "Not enough value sent; check price!");
+        }
         _mint(msg.sender, newItemId);
         _setTokenURI(newItemId, uri);
         _setColors(newItemId, bgColor, fgColor);
