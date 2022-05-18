@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.14;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
@@ -7,14 +7,14 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
 
-contract GetHiiTest9 is ERC721, ERC721Enumerable, Pausable, Ownable {
+contract QetHiiTest1 is ERC721, ERC721Enumerable, Pausable, Ownable {
 
     using Counters for Counters.Counter;
     using Strings for uint256;
     Counters.Counter private _tokenIds;
     mapping (uint256 => string) private _tokenURIs;
 
-    constructor() ERC721("Get Hii Test 9", "Hi!") {}
+    constructor() ERC721("Qet Hii Test 1", "Hi!") {}
 
     function _setTokenURI(uint256 tokenId, string memory _tokenURI)
     internal virtual {
