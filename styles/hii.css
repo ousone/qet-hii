@@ -1,0 +1,102 @@
+body {
+    font-size: 15px;
+    font-family: "Lucida Console", Monaco, monospace;
+    color: #111;
+    background: #eee;
+    padding: 0;
+    margin: 0;
+}
+
+.container {
+    min-width: 360px;
+    max-width: 440px;
+    padding: 10px;
+    margin: 0 auto;
+}
+
+header {
+    position: relative;
+    overflow: auto;
+}
+
+header::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+header h1 {
+    margin: 5px 0; 
+    font-size: 20px;
+    float: left;
+}
+
+header button {
+    float: right;
+    margin: 0; 
+}
+
+
+#svg-holder {
+    width: 100%;
+    position: relative;
+    margin: 10px 0;
+}
+
+button {
+    display: inline-block;
+    color: #eee;
+    background: #111;
+    padding: 10px 15px;
+    display: inline-block;
+    font-size: 12px;
+    border-width: 0;
+    border-radius: 30px;
+    font-family: "Lucida Console", Monaco, monospace;
+    letter-spacing: 0;
+    text-align: center;
+    cursor: pointer;
+    -webkit-transition: ease-out 0.4s;
+    -moz-transition: ease-out 0.4s;
+    transition: ease-out 0.4s;
+}
+
+button:hover {
+    background: #f60;
+}
+
+.mint {
+    width: 100%;
+    font-size: 20px;
+    padding: 10px 20px;
+    margin: 10px 0;
+}
+
+img {
+    width: 100%;
+}
+
+p {
+    margin: 5px 0;
+}
+/*
+.mint {
+    width: 100%;
+    color: #eee;
+    border: 2px solid #f60;
+    border-radius: 0px;
+    padding: 12px 24px;
+    display: inline-block;
+    font-size: 18px;
+    letter-spacing: 1px;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: inset 0 0 0 0 #f60;
+    -webkit-transition: ease-out 0.4s;
+    -moz-transition: ease-out 0.4s;
+    transition: ease-out 0.4s;
+}
+  
+.mint:hover {
+    box-shadow: inset 0 0 0 50px #f60;
+}*/
