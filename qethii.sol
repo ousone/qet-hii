@@ -67,7 +67,6 @@ contract QetHii is ERC721, ERC721Enumerable, Pausable, Ownable {
 
     }
 
-/*
     function bgColorOf(uint256 tokenId) public view 
     returns(string memory) {
         return _bgColors[tokenId];
@@ -76,20 +75,16 @@ contract QetHii is ERC721, ERC721Enumerable, Pausable, Ownable {
     returns(string memory) {
         return _fgColors[tokenId];
     }
-*/
+
     uint256 public constant SUPPLYLIMIT = 10**4;
-    uint256 public constant BASEPRICE = 10**18; // 1 ether = 10**18
 
     mapping (uint256 => bool) private _animation;
-/*
-    function _setAnimation(uint256 tokenId, bool animation) 
-    internal virtual {
-        _animation[tokenId] = animation;
-    }*/
 
-    // Production
-    function _setPrice(uint256 tokenId, bool animation) 
-    internal virtual 
+/*
+    // Production price structure
+    uint256 public constant BASEPRICE = 10**18; // 1 ether = 10**18
+    
+    function _setPrice(uint256 tokenId, bool animation) internal virtual 
     returns(uint256) {
 
         _animation[tokenId] = animation;
@@ -97,13 +92,13 @@ contract QetHii is ERC721, ERC721Enumerable, Pausable, Ownable {
         uint256 price;
 
         if (msg.sender == owner()) {
-            price == 0;
+            price = 0;
         }
 
         // 1-300
         else if (tokenId >=1 && tokenId <= 300) {
             if (balanceOf(msg.sender) == 0) {
-                price == 0;
+                price = 0;
             }
             else {
                 price = BASEPRICE;
@@ -127,8 +122,8 @@ contract QetHii is ERC721, ERC721Enumerable, Pausable, Ownable {
 
         // if animation, return price * 2
         if (animation == true && msg.sender != owner()) {
-            if (balanceOf(msg.sender) == 0) {
-                return BASEPRICE;
+            if (price == 0) {
+                return price + BASEPRICE;
             }
             else {
                 return price * 2;
@@ -137,29 +132,67 @@ contract QetHii is ERC721, ERC721Enumerable, Pausable, Ownable {
         else {
             return price;
         }
+ 
+    }*/
 
-        
-    }
+    
+    // Dev price structure
+    uint256 public constant BASEPRICE = 10**15; // 0.001 ether
 
-    /*
-    // Dev test 
-    function _setPrice(uint256 tokenId) 
-    internal virtual 
+    function _setPrice(uint256 tokenId, bool animation) internal virtual 
     returns(uint256) {
-        // 0.05 ether = 5*(10**16)
-        uint256 basePrice = 5*(10**16);
+
+        _animation[tokenId] = animation;
+
         uint256 price;
-        if (tokenId >=1 && tokenId <= 2) {
-            price == 0;
+
+        if (msg.sender == owner()) {
+            price = 0;
         }
-        else if (tokenId == 3) {
-            price = basePrice;
+
+        // 1-2
+        else if (tokenId >=1 && tokenId <= 2) {
+            if (balanceOf(msg.sender) == 0) {
+                price = 0;
+            }
+            else {
+                price = BASEPRICE;
+            }
+        }
+
+        // 3 - 4
+        else if (tokenId >= 3 && tokenId <= 4) {
+            price = BASEPRICE;
+        }
+
+        // 5 - 6 * 10
+        else if (tokenId >= 5 && tokenId <= 6) {
+            price = BASEPRICE * 10;
+        }
+
+        // 7 ... * 100
+        else {
+            price = BASEPRICE * 100;
+        }
+
+        // if animation, return price * 2
+        if (animation == true && msg.sender != owner()) {
+            if (price == 0) {
+                return price + BASEPRICE;
+            }
+            else {
+                return price * 2;
+            }
         }
         else {
-            price = basePrice * 10;
+            return price;
         }
-        return price;
-    }*/
+    }
+
+    function mintingPriceOf(uint256 tokenId) public view 
+    returns(string memory) {
+        return _setPrice(tokenId, _animation[tokenId]);
+    }
 
     function mint(string memory uri, string memory bgColor, string memory fgColor, bool animation)
     public payable
@@ -167,22 +200,7 @@ contract QetHii is ERC721, ERC721Enumerable, Pausable, Ownable {
         require(totalSupply() < SUPPLYLIMIT, "Exceeds token supply.");
         _tokenIds.increment(); // Begin at Id #1 instead of #0
         uint256 newItemId = _tokenIds.current();
-
-        /*
-        // if owner, set price to 0
-        if (msg.sender == owner()) {
-            msg.value == 0;
-        }
-        // if minting price == 0, user can mint just 1 token
-        else if (_setPrice(newItemId) == 0) {
-            require(balanceOf(msg.sender) == 0, "Already have token(s).");
-        }
-        else {
-            require(msg.value >= _setPrice(newItemId), "Not enough value sent; check price!");
-        }*/
-
         require(msg.value >= _setPrice(newItemId, animation), "Not enough value sent; check price!");
-
         _mint(msg.sender, newItemId);
         _setTokenURI(newItemId, uri);
         _setColors(newItemId, bgColor, fgColor);
@@ -203,7 +221,6 @@ contract QetHii is ERC721, ERC721Enumerable, Pausable, Ownable {
     }
 
     // The following functions are overrides required by Solidity.
-
     function _beforeTokenTransfer(address from, address to, uint256 tokenId)
         internal
         override(ERC721, ERC721Enumerable)
