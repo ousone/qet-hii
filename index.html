@@ -12,7 +12,7 @@
       <header>
 
         <h1>Let&apos;s Qet Hi!</h1>
-        <button id= "preview">Next Random Hi!</button>
+        <button id= "preview">New Random Hi!</button>
 
       </header>
 
@@ -21,15 +21,32 @@
         <div id="svg-holder">
           <img id="svg-preview" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTQwIiBoZWlnaHQ9IjU0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMCAwaDU0MHY1NDBIMFoiIHN0eWxlPSJmaWxsOiMwMDAwMDAiPjwvcGF0aD48cGF0aCBkPSJNMTExIDE4MHYxODBoNjZ2LTY2LjloMThWMzYwaDY2VjE4MGgtNjZ2NjYuOWgtMThWMTgwWm0xNjggMHY0Mmg2NnYtNDJ6bTg0IDB2MTIwaDY2VjE4MFptLTg0IDYwdjEyMGg2NlYyNDBabTg0IDc4djQyaDY2di00MnoiIHN0eWxlPSJmaWxsOiNmZmZmZmYiPjwvcGF0aD48L3N2Zz4=">
         </div>
+<!--
+        <p>
+          <select name="fontWeight" id="fontWeight">
+            <option value="100">100</option>
+            <option value="200">200</option>
+            <option value="300">300</option>
+            <option value="400">400</option>
+            <option value="500">500</option>
+            <option value="600">600</option>
+            <option value="700">700</option>
+            <option value="800">800</option>
+            <option value="900">900</option>
+            <option value="1000" selected="selected">1000</option>
+          </select>
+          <label for="fontWeight">Change font weight</label>
+        </p>
+        -->
 
         <p>
-          <label for="bgcolor">Background color:</label>
-          <input type="color" id="bgColor" name="bgColor" value="#000000">
+          <input type="color" id="fgColor" name="fgColor" value="#FFFFFF">
+          <label for="fgcolor">Change text color</label>
         </p>
 
         <p>
-          <label for="fgcolor">Foreground color:</label>
-          <input type="color" id="fgColor" name="fgColor" value="#FFFFFF">
+          <input type="color" id="bgColor" name="bgColor" value="#000000">
+          <label for="bgcolor">Change background color</label>
         </p>
 
         <p>
@@ -50,7 +67,8 @@
     </div><!-- .container -->
 
   </body>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/web3@1.7.3/dist/web3.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.1.2/dist/svg.min.js"></script>
   <script type="text/javascript" src="scripts/address.js"></script>
   <script type="text/javascript" src="scripts/helpers.js"></script>
   <script type="text/javascript" src="scripts/minter.js"></script>

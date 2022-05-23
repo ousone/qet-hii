@@ -1,24 +1,99 @@
+function randomColor() {
+	var color = "#" + Math.floor(Math.random()*16777215).toString(16).padStart(6,'0').toUpperCase();
+	return color;
+}
+
+function animationColorValues(color1,color2) {
+	var values = color1+';'+color2+';'+color1;
+	console.log(values);
+	return values;
+}
+
+function setAnimateElement(color1,color2) {
+	var colorAnime = SVG('<animate/>').attr({ attributeName: "fill", values: animationColorValues(color1,color2), dur: "8s", begin: "1s", repeatCount: "indefinite" });
+	return colorAnime;
+}
+
 function createSVG(bgColor,fgColor) {
+	var draw = 	SVG().removeNamespace().attr("xmlns", "http://www.w3.org/2000/svg").size(540, 540);
+	var bg = draw.path("M0 0h540v540H0Z").attr({ fill: bgColor });
+	var fg = draw.path("M111 180v180h66v-66.9h18V360h66V180h-66v66.9h-18V180Zm168 0v42h66v-42zm84 0v120h66V180Zm-84 60v120h66V240Zm84 78v42h66v-42z").attr({ fill: fgColor });
 
-	var head = '<svg width="540" height="540" xmlns="http://www.w3.org/2000/svg">';
-	var bgPath = '<path d="M0 0h540v540H0Z" style="fill:' +bgColor+ '"/>';
-	var textPath = '<path d="M111 180v180h66v-66.9h18V360h66V180h-66v66.9h-18V180Zm168 0v42h66v-42zm84 0v120h66V180Zm-84 60v120h66V240Zm84 78v42h66v-42z" style="fill:' +fgColor+'"/></svg>';
+	if (animationBool()) {
+		var bgAnime = setAnimateElement(bgColor,fgColor);
+		var fgAnime = setAnimateElement(fgColor,bgColor);
+		bg.add(bgAnime);
+		fg.add(fgAnime);
+	}
 
-	var svg = head + bgPath + textPath;
-	//console.log(svg);
+	var svg = draw.svg();
+	console.log(svg);
 	return svg;
 }
 
-function createSVGAnimate(bgColor,fgColor) {
-
-	var head = '<svg width="540" height="540" xmlns="http://www.w3.org/2000/svg">';
-	var bgPath = '<path d="M0 0h540v540H0Z" style="fill:' +bgColor+ '"><animate attributeName="fill" values="' +bgColor+';'+fgColor+';'+bgColor+ '" begin="1s" dur="8s" repeatCount="indefinite"/></path>';
-	var textPath = '<path d="M111 180v180h66v-66.9h18V360h66V180h-66v66.9h-18V180Zm168 0v42h66v-42zm84 0v120h66V180Zm-84 60v120h66V240Zm84 78v42h66v-42z" style="fill:' +fgColor+'"><animate attributeName="fill" values="' +fgColor+';'+bgColor+';'+fgColor+ '" begin="1s" dur="8s" repeatCount="indefinite"/></path></svg>';
-
-	var svg = head + bgPath + textPath;
-	//console.log(svg);
-	return svg;
+function insertSVG(svg,holder) {
+	if(holder.innerHTML){
+		holder.innerHTML = '';
+	}
+	var img = document.createElement('img');
+	img.id = 'svg-preview';
+    img.src = createSvgUri(svg);
+    holder.appendChild(img);
 }
+
+function placeSVG(bgColor,fgColor,holder) {
+	var svg = createSVG(bgColor,fgColor);
+	insertSVG(svg,holder);
+	console.log("Animation:", animationBool());
+}
+
+function customColorPreview() {
+
+	var bgColor = randomColor();
+	var fgColor = randomColor();
+	var holder = document.getElementById("svg-holder");
+
+	var bgPicker = document.getElementById('bgColor');
+	var fgPicker = document.getElementById('fgColor');
+
+	bgPicker.value = bgColor;
+	fgPicker.value = fgColor;
+	console.log("Background color:", bgColor);
+	console.log("Foreground color:", fgColor);
+
+	// Color animation
+	var animator = document.getElementById('animation');
+	placeSVG(bgColor,fgColor,holder);
+	animator.addEventListener('change', function(event){
+		placeSVG(bgColor,fgColor,holder);
+	});
+
+	// when manually change bgColor
+	bgPicker.addEventListener("input", function() {
+		bgColor = this.value;
+		placeSVG(bgColor,fgColor,holder);
+		console.log("Background color:", bgColor);
+	});
+
+	// when manually change fgColor
+	fgPicker.addEventListener("input", function() {
+		fgColor = this.value;
+		placeSVG(bgColor,fgColor,holder);
+		console.log("Foreground color:", fgColor);
+	});
+
+}
+
+/*
+function insertSVG(svg,holder) {
+	if(holder.innerHTML){
+		holder.innerHTML = '';
+	}
+	var img = document.createElement('img');
+	img.id = 'svg-preview';
+    img.src = createSvgUri(svg);
+    holder.appendChild(img);
+}*/
 
 function createSvgUri(svg) {
 	var svgURI = 'data:image/svg+xml;base64,' + btoa(svg);
@@ -35,23 +110,6 @@ function createMetadata(bgColor,fgColor) {
 	//console.log(svgURI);
 
 	var time = Date.now();
-
-	/*
-	var uriObj = {
-		name: "Hi!@" + time, 
-		description: "On-chain SVG Hi!", 
-		image: svgURI,
-		attributes: [
-			{
-			trait_type: "Foreground Color",
-			value: fgColor
-			},
-			{
-			trait_type: "Background Color",
-			value: bgColor
-			}
-		]
-	};*/
 
 	var uriObj = {};
 
@@ -91,24 +149,9 @@ function createTokenUri(bgColor,fgColor) {
 	return uri;
 }
 
-function insertSVG(svg,holder) {
-	if(holder.innerHTML){
-		holder.innerHTML = '';
-	}
-	var img = document.createElement('img');
-	img.id = 'svg-preview';
-    img.src = createSvgUri(svg);
-    holder.appendChild(img);
-}
-
-function randomColor() {
-	var color = Math.floor(Math.random()*16777215).toString(16).padStart(6,'0').toUpperCase();
-	return color;
-}
-
 function randomColorPreview() {
-	var bgColor = "#"+randomColor();
-	var fgColor = "#"+randomColor();
+	var bgColor = randomColor();
+	var fgColor = randomColor();
 	var holder = document.getElementById("svg-holder");
 
 	var bgPicker = document.getElementById('bgColor');
@@ -145,6 +188,7 @@ function randomColorPreview() {
 
 }
 
+/*
 function customColorPreview() {
 
 	var bgColor = "#"+randomColor();
@@ -212,6 +256,7 @@ function customColorPreview() {
 	});
 
 }
+*/
 
 function animationBool() {
 	var animator = document.getElementById('animation');
