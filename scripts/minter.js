@@ -19,8 +19,6 @@
 
 		var tokenId = totalSupply + 1;
 
-		//var basePrice = 0.5 * (10**18);
-		//console.log('Base price is', basePrice);
 		const BASEPRICE = Number(await contract.methods.BASEPRICE().call());
 		console.log('Base price:', BASEPRICE);
 
@@ -29,7 +27,6 @@
 
 		function getPriceTest() {
 
-			var animation = animationBool();
 			var price = BASEPRICE * 100;
 
 			if (account === owner) {
@@ -37,7 +34,7 @@
 				console.log('Owner minting price:', price);
 			}
 
-			else if (!animation) {
+			else if (!animationBool()) {
 
 				if (tokenId >=1 && tokenId <= 2) {
 					if (tokenBalance == 0) {
@@ -96,11 +93,11 @@
 			
 		}
 
-		customColorPreview();
+		customPreview();
 		getPriceTest();
 		
 		document.getElementById('preview').onclick = async () => {
-			customColorPreview();
+			customPreview();
 			getPriceTest();
 		}
 
