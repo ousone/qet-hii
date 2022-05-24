@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.7;
+pragma solidity ^0.8.14;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
@@ -7,14 +7,14 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
 
-contract QetHii is ERC721, ERC721Enumerable, Pausable, Ownable {
+contract GetHii is ERC721, ERC721Enumerable, Pausable, Ownable {
 
     using Counters for Counters.Counter;
     using Strings for uint256;
     Counters.Counter private _tokenIds;
     mapping (uint256 => string) private _tokenURIs;
 
-    constructor() ERC721("Qet Hii Test 3", "Hi!") {}
+    constructor() ERC721("Get Hii Test 11", "Hi!") {}
 
     function _setTokenURI(uint256 tokenId, string memory _tokenURI)
     internal virtual {
@@ -29,11 +29,21 @@ contract QetHii is ERC721, ERC721Enumerable, Pausable, Ownable {
         return(string(abi.encodePacked(_tokenURI)));
     }
 
+    function _getFirstChar(string memory text) 
+    internal virtual 
+    returns (bytes1) {
+        bytes memory a = bytes(text);
+        return bytes1(a[0]);    
+    }
+
     mapping (uint256 => string) private _bgColors;
     mapping (uint256 => string) private _fgColors;
 
     function _setColors(uint256 tokenId, string memory bgColor, string memory fgColor) 
     internal virtual {
+
+        require(_getFirstChar(bgColor) == "#" && _getFirstChar(fgColor) == "#", "Unsupported color format: first character must be #.");
+        require(bytes(bgColor).length == 7 && bytes(fgColor).length == 7, "Unsupported color format: BG Color & Text Color must have # other 6 hex literals.");
         require(keccak256(bytes(bgColor)) != keccak256(bytes(fgColor)), "BG Color & Text Color cannot be the same.");
         uint256 i;
         uint256 j;
@@ -80,21 +90,16 @@ contract QetHii is ERC721, ERC721Enumerable, Pausable, Ownable {
 
     mapping (uint256 => bool) private _animation;
 
-/*
     // Production price structure
     uint256 public constant BASEPRICE = 10**18; // 1 ether = 10**18
     
     function _setPrice(uint256 tokenId, bool animation) internal virtual 
     returns(uint256) {
-
         _animation[tokenId] = animation;
-
         uint256 price;
-
         if (msg.sender == owner()) {
             price = 0;
         }
-
         // 1-300
         else if (tokenId >=1 && tokenId <= 300) {
             if (balanceOf(msg.sender) == 0) {
@@ -104,12 +109,10 @@ contract QetHii is ERC721, ERC721Enumerable, Pausable, Ownable {
                 price = BASEPRICE;
             }
         }
-
         // 301 - 1000
         else if (tokenId >= 301 && tokenId <= 1000) {
             price = BASEPRICE;
         }
-
         // 1001 - 3000 * 10
         else if (tokenId >= 1001 && tokenId <= 3000) {
             price = BASEPRICE * 10;
@@ -119,7 +122,6 @@ contract QetHii is ERC721, ERC721Enumerable, Pausable, Ownable {
         else {
             price = BASEPRICE * 100;
         }
-
         // if animation, return price * 2
         if (animation == true && msg.sender != owner()) {
             if (price == 0) {
@@ -132,24 +134,19 @@ contract QetHii is ERC721, ERC721Enumerable, Pausable, Ownable {
         else {
             return price;
         }
- 
-    }*/
+    }
 
-    
+    /*
     // Dev price structure
     uint256 public constant BASEPRICE = 10**15; // 0.001 ether
 
     function _setPrice(uint256 tokenId, bool animation) internal virtual 
     returns(uint256) {
-
         _animation[tokenId] = animation;
-
         uint256 price;
-
         if (msg.sender == owner()) {
             price = 0;
         }
-
         // 1-2
         else if (tokenId >=1 && tokenId <= 2) {
             if (balanceOf(msg.sender) == 0) {
@@ -159,22 +156,18 @@ contract QetHii is ERC721, ERC721Enumerable, Pausable, Ownable {
                 price = BASEPRICE;
             }
         }
-
         // 3 - 4
         else if (tokenId >= 3 && tokenId <= 4) {
             price = BASEPRICE;
         }
-
         // 5 - 6 * 10
         else if (tokenId >= 5 && tokenId <= 6) {
             price = BASEPRICE * 10;
         }
-
         // 7 ... * 100
         else {
             price = BASEPRICE * 100;
         }
-
         // if animation, return price * 2
         if (animation == true && msg.sender != owner()) {
             if (price == 0) {
@@ -188,11 +181,7 @@ contract QetHii is ERC721, ERC721Enumerable, Pausable, Ownable {
             return price;
         }
     }
-
-    function mintingPriceOf(uint256 tokenId) public view 
-    returns(string memory) {
-        return _setPrice(tokenId, _animation[tokenId]);
-    }
+    */
 
     function mint(string memory uri, string memory bgColor, string memory fgColor, bool animation)
     public payable

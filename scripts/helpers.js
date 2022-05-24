@@ -185,6 +185,64 @@ function createTokenUri(bgColor,fgColor) {
 	return uri;
 }
 
+function setPrice(basePrice,tokenId,tokenBalance,account,owner) {
+	var price = basePrice * 100;
+	if (account === owner) {
+		price = 0;
+		console.log('Owner minting price:', price);
+	}
+	else if (!animationBool()) {
+		if (tokenId >=1 && tokenId <= 300) {
+			if (tokenBalance == 0) {
+				price = 0;
+				console.log('Your newly minting price:', price);
+			}
+			else {
+				price = basePrice;
+				console.log('Your next minting price:', price);
+			}
+		}
+		else if (tokenId >=301 && tokenId <= 1000) {
+			price = basePrice;
+			console.log('Tier 2 minting price:', price);
+		}
+		else if (tokenId >=1001 && tokenId <= 3000) {
+			price = basePrice * 10;
+			console.log('Tier 3 minting price:', price);
+		}
+		else {
+			console.log('Minting price:', price);
+		}
+	}
+	else {
+		if (tokenId >=1 && tokenId <= 300) {
+			if (tokenBalance == 0) {
+				price = basePrice;
+				console.log('Your newly animation minting price:', price);
+			}
+			else {
+				price = basePrice * 2;
+				console.log('Your next animation minting price:', price);
+			}
+		}
+		else if (tokenId >=301 && tokenId <= 1000) {
+			price = basePrice * 2;
+			console.log('Tier 2 animation minting price:', price);
+		}
+	
+		else if (tokenId >=1001 && tokenId <= 3000) {
+			price = basePrice * 10 * 2;
+			console.log('Tier 3 animation minting price:', price);
+		}
+		else {
+			price = basePrice * 100 * 2;
+			console.log('Animation minting price:', price);
+		}
+	}
+	//console.log('Minting price:', price);
+	return price;
+}
+
 /*
 function randomColorPreview() {
 	var bgColor = randomColor();
