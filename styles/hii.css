@@ -31,7 +31,8 @@ header h1 {
     float: left;
 }
 
-header button {
+header button,
+header .button {
     float: right;
     margin: 0; 
 }
@@ -43,7 +44,7 @@ header button {
     margin: 10px 0;
 }
 
-button {
+button, .button {
     display: inline-block;
     color: #eee;
     background: #111;
@@ -59,13 +60,14 @@ button {
     -webkit-transition: ease-out 0.4s;
     -moz-transition: ease-out 0.4s;
     transition: ease-out 0.4s;
+    text-decoration: none;
 }
 
-button:hover {
+button:hover, .button:hover {
     background: #f60;
 }
 
-.mint {
+#mint {
     width: 100%;
     font-size: 20px;
     padding: 10px 20px;

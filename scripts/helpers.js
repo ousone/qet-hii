@@ -69,15 +69,19 @@ function insertSVG(svg,holder) {
 	img.id = 'svg-preview';
     img.src = createSvgUri(svg);
     holder.appendChild(img);
+
+	// change favicon
+	var favicon = document.querySelector("link[rel*='icon']");
+    favicon.href = img.src;
 }
 
 function placeSVG(bgColor,fgColor,holder) {
 	var svg = createSVG(bgColor,fgColor);
 	insertSVG(svg,holder);
-	console.log("Animation:", animationBool());
+	//console.log("Animation:", animationBool());
 }
 
-function customPreview() {
+function preview() {
 
 	var bgColor = randomColor();
 	var fgColor = randomColor();
@@ -241,6 +245,12 @@ function setPrice(basePrice,tokenId,tokenBalance,account,owner) {
 	}
 	//console.log('Minting price:', price);
 	return price;
+}
+
+// Main display function
+preview();
+document.getElementById('preview').onclick = async () => {
+	preview();
 }
 
 /*
