@@ -1,5 +1,5 @@
 body {
-    font-size: 15px;
+    font-size: 14px;
     font-family: "Lucida Console", Monaco, monospace;
     color: #111;
     background: #eee;
@@ -37,6 +37,9 @@ header .button {
     margin: 0; 
 }
 
+footer {
+    border-top: 1px solid #aaa;
+}
 
 #svg-holder {
     width: 100%;
@@ -71,7 +74,7 @@ button:hover, .button:hover {
     width: 100%;
     font-size: 20px;
     padding: 10px 20px;
-    margin: 10px 0;
+    margin: 20px 0;
 }
 
 img {
@@ -97,4 +100,12 @@ p {
 
 #fontWeight, #fgColor, #bgColor {
     width: 4em;
+}
+
+h2 {
+    font-size: 18px;
+}
+
+li, #content {
+    margin-bottom: 10px;
 }

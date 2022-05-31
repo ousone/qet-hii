@@ -1,19 +1,27 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="styles/hii.css">
     <link rel="shortcut icon" type="image/x-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxODAwIiBoZWlnaHQ9IjE4MDAiPjxwYXRoIGQ9Ik0wIDBoMTgwMHYxODAwSDBaIiBmaWxsPSIjZjYwIj48YW5pbWF0ZSBhdHRyaWJ1dGVOYW1lPSJmaWxsIiB2YWx1ZXM9IiNmNjA7IzAwMDsjZjYwIiBkdXI9IjhzIiBiZWdpbj0iMXMiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIi8+PC9wYXRoPjxwYXRoIGQ9Ik00NDIgMzAwdjEyMDBoMzQ0di00NzRoMjI4djQ3NGgzNDRWMzAwaC0zNDR2NDc0SDc4NlYzMDBaIj48YW5pbWF0ZSBhdHRyaWJ1dGVOYW1lPSJmaWxsIiB2YWx1ZXM9IiMwMDA7I2Y2MDsjMDAwIiBkdXI9IjhzIiBiZWdpbj0iMXMiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIi8+PC9wYXRoPjwvc3ZnPg=="/>
-    <title>Let&apos;s Get Hi!</title>
+    <title>Let&apos;s Qet Hi!</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.1.2/dist/svg.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.7.3/dist/web3.min.js"></script>
+    <script src="https://unpkg.com/moralis/dist/moralis.js"></script>
   </head>
+
   <body>
     <div class="container">
 
       <header>
 
-        <h1>Let&apos;s Get Hi!</h1>
+        <h1>Let&apos;s Qet Hi!</h1>
+
         <a id="metamask-download" class="button login" target="_blank" href="https://metamask.io/download/">You have to Download MetaMask</a>
+        <button id="btn-login">Login With MetaMask</button>
+        <button id="btn-logout">Logout</button>
 
       </header>
 
@@ -24,7 +32,7 @@
         </div>
 
         <p>
-          <button id= "preview">Next Random Hi!</button>
+          <button id= "preview">Preview Random Hi!</button>
         </p>
 
         <p>
@@ -58,38 +66,42 @@
           <input type="checkbox" id="animation" name="animation">
         </p>
 
-        <!--<button id= "mint" class="mint">Mint Your NFT</button></p>-->
+        <p id="wallet-address"></p>
 
-      </div>
+        <button id= "mint" class="mint">Mint Your NFT</button>
+
+      </div><!--#content-->
 
       <footer>
 
-        <p id="network-name">Network Name: </p>
-        <p id="selected-account">Selected Account: </p>
+        
 
         <h2>Hint</h2>
+
         <p>In order to mint your NFT, you have to 
           <ol id="hint-list">
             <li><a target="_blank" href="https://metamask.io/download/">Download MetaMask</a>.</li>
             <li><a target="_blank" href="https://docs.polygon.technology/docs/develop/metamask/hello">Set up MetaMask wallet</a>. It's so <strong>IMPORTANT</strong> to write down your <strong>Password</strong> and <strong>Secret Backup Phrase</strong> mindfully and keep them somewhere safe, because you could not recover or import your wallet to new devices without them.</li>
             <li><a target="_blank" href="https://docs.polygon.technology/docs/develop/metamask/config-polygon-on-metamask/">Add and switch network to Polygon Mainnet</a>.</li>
             <li>Buy or transfer some Polygon native tokens (MATIC) to your wallet.</li>
-            <li>Click "Login With MetaMask" button.</li>
+            <li>Click "Login With MetaMask" button and sign message, no gas fee required.</li>
             <li>Randomize or customize and preview your Hi! image above. (Use Chrome or Brave for better color picking.)</li>
-            <li>When you like what you see, click "Mint Your NFT" button.</li>
-            <li>Wait a couple minutes and login to <a target="_blank" href="https://opensea.io/account">OpenSea</a> or <a target="_blank" href="https://rarible.com/items/owned">Rarible</a> with MetaMask then you could see your newly mint NFT there.</li>
+            <li>When you like what you see, click "Mint Your NFT" button, you'll see minting price plus gas fee.</li>
+            <li>After the transaction is confirmed, wait a couple minutes and login to <a target="_blank" href="https://opensea.io/account">OpenSea</a> or <a target="_blank" href="https://rarible.com/items/owned">Rarible</a> with MetaMask then you could see your newly mint NFT there.</li>
             <li>You could then transfer or trade your NFT freely.</li>
           </ol> 
         </p>
-        
+
       </footer>
 
-    </div><!-- .container -->
+    
 
+    </div><!--.container-->
+
+    <script src="./scripts/preview.js"></script>
+    <script src="./scripts/auth.js"></script>
+    <script src="./scripts/address.js"></script>
+    <script src="./scripts/minter.js"></script>
+  
   </body>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/web3@1.7.3/dist/web3.min.js"></script>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.1.2/dist/svg.min.js"></script>
-  <script type="text/javascript" src="scripts/address.js"></script>
-  <script type="text/javascript" src="scripts/preview.js"></script>
-  <!--<script type="text/javascript" src="scripts/minter.js"></script>-->
 </html>
