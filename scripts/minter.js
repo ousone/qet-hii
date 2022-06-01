@@ -116,11 +116,10 @@ function setPrice(basePrice,tokenId,tokenBalance,account,owner) {
 
         var accounts = await web3.eth.getAccounts();
         account = accounts[0];
-        //document.getElementById('wallet-address').textContent = "Your wallet address: " + account;
         
         contract = new web3.eth.Contract(ABI, ADDRESS);
         var owner = await contract.methods.owner().call();
-		console.log("Contract owner:", owner);
+		//console.log("Contract owner:", owner);
 
         const SUPPLYLIMIT = Number(await contract.methods.SUPPLYLIMIT().call());
 		console.log('Supply Limit:', SUPPLYLIMIT);
@@ -133,19 +132,23 @@ function setPrice(basePrice,tokenId,tokenBalance,account,owner) {
 		const BASEPRICE = Number(await contract.methods.BASEPRICE().call());
 		console.log('Base price:', BASEPRICE);
 
-		var tokenBalance = await contract.methods.balanceOf(account).call();
-		console.log('Your account token balance:', tokenBalance);
+		if (account) {
 
-        var price = setPrice(BASEPRICE,tokenId,tokenBalance,account,owner);
+			var tokenBalance = await contract.methods.balanceOf(account).call();
+			console.log('Your account token balance:', tokenBalance);
 
-        document.getElementById('mint').onclick = async () => {
-			var bgColor = String(document.getElementById('bgColor').value).toUpperCase();
-			var fgColor = String(document.getElementById('fgColor').value).toUpperCase();
-			var uri = createTokenUri(bgColor,fgColor);
-			//var price = getPrice();
-			console.log(uri, bgColor, fgColor, animationBool());
-			contract.methods.mint(uri, bgColor, fgColor, animationBool()).send({ from: account, value: String(price)});
-        }
+			var price = setPrice(BASEPRICE,tokenId,tokenBalance,account,owner);
+
+			document.getElementById('mint').onclick = async () => {
+				var bgColor = String(document.getElementById('bgColor').value).toUpperCase();
+				var fgColor = String(document.getElementById('fgColor').value).toUpperCase();
+				var uri = createTokenUri(bgColor,fgColor);
+				//var price = getPrice();
+				console.log(uri, bgColor, fgColor, animationBool());
+				contract.methods.mint(uri, bgColor, fgColor, animationBool()).send({ from: account, value: String(price)});
+			}
+
+		}
     }
 
 })();
