@@ -1,6 +1,6 @@
 body {
     font-size: 14px;
-    font-family: "Lucida Console", Monaco, monospace;
+    font-family: 'Noto Sans Thai', 'Noto Sans', sans-serif;
     color: #111;
     background: #eee;
     padding: 0;
@@ -47,7 +47,7 @@ footer {
     margin: 10px 0;
 }
 
-button, .button {
+button, a.button {
     display: inline-block;
     color: #eee;
     background: #111;
@@ -66,8 +66,10 @@ button, .button {
     text-decoration: none;
 }
 
-button:hover, .button:hover {
+button:hover, a.button:hover {
+    color: #eee;
     background: #f60;
+    text-decoration: none;
 }
 
 #mint {
@@ -108,4 +110,21 @@ h2 {
 
 li, #content {
     margin-bottom: 10px;
+}
+
+a {
+    text-decoration: none;
+    color: #f60;
+}
+a:visited {
+    text-decoration: underline;
+    color: #809;
+}
+a:hover {
+    text-decoration: underline;
+    color: #000;
+}
+a:active {
+    text-decoration: none;
+    color: #ff0;
 }
